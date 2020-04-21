@@ -94,13 +94,14 @@ border-radius: 5px;">
 
 
    <div *ngIf="isGraphVisible" >
-      <div class="chart-container" style="position: relative;height: 70vh;width: 80vw;" >
+      <div class="chart-container" style="position: relative;height: 100%;width: 100%;" >
         
           <h6><b>Top 10 districts with active patients:</b></h6>
           <canvas 
               baseChart
               [chartType]="'doughnut'"
               [data]="pieData"
+              [legend]="true"
               [labels]="pieStateDist">
           </canvas>
       </div>
@@ -114,7 +115,7 @@ border-radius: 5px;">
       
     <h6>New patients in the district:  <b>{{selected_District}}</b></h6>
 
-    <canvas width="50%" height="300px"
+    <canvas 
         baseChart
         [chartType]="'line'"
         [datasets]="this.districtChartDatalst.chartData"
@@ -130,11 +131,11 @@ border-radius: 5px;">
   <br>
   <br>
  
-    <div class="chart-container" style="position: relative;height: 80vh;width: 80vw;" >
+    <div class="chart-container" style="position: relative;height: 90vh;width: 80vw;" >
       
     <h6>New patients across districts in the state(best view in laptop or deselect lables):  <b>{{selected_state}}</b></h6>
 
-    <div class="chart-container" style="position:relative;height:90vh;width:80vw;" >
+    <div class="chart-container" style="position:relative;height:90vh;width: 80vw;" >
         <canvas  
             baseChart
             [chartType]="'bar'"
@@ -144,7 +145,7 @@ border-radius: 5px;">
             [legend]="true"
             (chartClick)="onChartClick($event)">
         </canvas>
-      </div>
+    </div>
   </div>
 
   <br>

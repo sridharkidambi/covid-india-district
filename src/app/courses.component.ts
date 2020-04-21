@@ -28,6 +28,7 @@ export class CoursesComponent implements OnInit{
     pieData:MultiDataSet=[];
     pieStateDist: Label[]=[];
     covid_data:any;
+    covid_data_copy=[];
     covid_data_filtered:any;
     itemchartData:ChartData;
     chartDatalst:chartDataList;
@@ -88,13 +89,16 @@ export class CoursesComponent implements OnInit{
 
       this.yesterdayDate=new Date();
       this.yesterdayDate.setDate(this.yesterdayDate.getDate() - 1);
+      this.covid_data=null
       // console.log(this.yesterdayDate);
       if(this.covid_data == null){
       this._service.getCovidDataSer(this.datepipe.transform(this.yesterdayDate, 'yyyy-MM-dd')
       ).subscribe(resp => {
         this.raw_resp=resp;
         this.covid_data = this.raw_resp.data;
-
+        this.covid_data=this.covid_data.sort((a, b) => parseInt(a[0])-parseInt(b[0]));
+        console.log('i am SK states');
+        console.log(this.covid_data);
         this.processStateWiseRecords();
         this.loadStates();
 
@@ -112,7 +116,7 @@ export class CoursesComponent implements OnInit{
         this.states.push(element[1]);
         }
       });
-      // console.log('i am SK states');
+      
       this.states=this.states.sort(function(a, b) { 
 
         if(b>a)  return -1;
@@ -131,6 +135,7 @@ export class CoursesComponent implements OnInit{
       this.districts =[];
       this.dates=[];
       this.chartData1=[];
+      this.state_covid_data=[];
       // console.log("this.covid_data");
       // console.log(this.selected_state);
       this.covid_data.forEach(element => {
@@ -172,11 +177,11 @@ export class CoursesComponent implements OnInit{
 
       //   }
       // });
-
+      this.chartData1=[];
       this.chartDatalst.chartData.forEach(item=>{
         this.chartData1.push((item));
       });
-
+      this.dates=[];
       this.state_covid_data.forEach(item=>{
           if(!(this.dates.includes( item[4]))){
             this.dates.push(item[4]);
@@ -186,13 +191,21 @@ export class CoursesComponent implements OnInit{
       this.dates.forEach(item=>{
         this.chartLabels1.push(item);
       });
+      console.log('Sk');
+      console.log(this.chartLabels1);
       // Sort the data
-      this.covid_data= this.covid_data.sort((a,b)=>{
+      // const myArray= [{ a: 'a', b: 'b' }, { a: 'c', b: 'd' }]; 
+      // const myClon/edArray = []; 
+      // this.covid_data_copy=[];
+      this.covid_data.forEach(item => {
+        this.covid_data_copy.push(Object.assign({}, item));
+      });
+      this.covid_data_copy= this.covid_data_copy.sort((a,b)=>{
         if(a[3]>b[3]) return -1;        
         if(b[3]>a[3]) return +1;        
         return 0;
       });
-      this.covid_data_filtered= this.covid_data.filter(x=>{
+      this.covid_data_filtered= this.covid_data_copy.filter(x=>{
         if(x[4]== this.datepipe.transform(this.yesterdayDate, 'yyyy-MM-dd'))
         return x;
       });

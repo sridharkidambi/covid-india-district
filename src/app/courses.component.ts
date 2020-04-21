@@ -60,7 +60,19 @@ export class CoursesComponent implements OnInit{
 
     chartOptions = {
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        scales: {
+          xAxes: [{
+            barPercentage: 3
+          }]
+          // yAxes: [{
+          //     ticks: {
+          //         suggestedMin: -300,
+          //         suggestedMax: 300
+          //     }
+          // }]
+      }
+
       };
     districts=[];
     states=[];

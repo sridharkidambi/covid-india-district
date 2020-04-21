@@ -94,14 +94,14 @@ border-radius: 5px;">
 
 
    <div *ngIf="isGraphVisible" >
-      <div class="chart-container" style="position: relative;height: 100%;width: 100%;" >
+      <div class="chart-container" style="position:relative;height:100%;width:100%;" >
         
           <h6><b>Top 10 districts with active patients:</b></h6>
           <canvas 
               baseChart
               [chartType]="'doughnut'"
               [data]="pieData"
-              [legend]="true"
+              [legend]="false"
               [labels]="pieStateDist">
           </canvas>
       </div>
